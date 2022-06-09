@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'
@@ -17,6 +18,14 @@ const Register = () => {
         q: `text-white`,
         lnk: `text-pinkorpurple font-bold no-underline`
     };
+
+    const toastOptions = {
+        position: "top-right",
+        autoClose: 8000,
+        pauseOnHover: true,
+        draggable: true,
+        theme: 'dark',
+    }
     
     //useState
     const [values, setValues] = useState({
@@ -27,36 +36,44 @@ const Register = () => {
     })
 
     //functions
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        handleValidation()
+        if (handleValidation()) {
+            const { password, confirmPass, username, email } = values;
+            const { data } = await axios.post()
+        }
     }
 
     const handleValidation = () => {
         const { password, confirmPass, username, email } = values;
         if (confirmPass !== password) {
-            alert('Hello World Bruh');
-            console.log('password', toast)
             toast.error('Password and Confirm Password must be the same',
-            {
-                position: "top-right",
-                autoClose: 8000,
-                pauseOnHover: true,
-                draggable: true,
-                theme: 'dark',
-            })
+            toastOptions)
+            return false
+        } else if (username.length < 3) {
+            toast.error('Username must be at least 3 characters',
+            toastOptions)
+            return false
+        } else if (password.length < 8) {
+            toast.error('Password must be at least 8 or more characters',
+            toastOptions)
+            return false
+        } else if (email === '') {
+            toast.error('Please enter a valid email address', 
+            toastOptions)
+            return false
         }
+        return true
     }
 
     const handleChange = (ev) => {
         setValues({ ...values, [ev.target.name]: ev.target.value })
     }
 
-
     return (
         <>
             <div className={styles.formContainer}>
-                    <form onSubmit={(evnt) => handleSubmit(evnt)} className={styles.frm}>
+                    <form onSubmit={(evnt) => handleSubmit(evnt)} action='/register' className={styles.frm}>
                         <div className={styles.brand}>
                             <img src={Logo} alt="Logo" className={styles.logo} />
                             <h1 className={styles.title}>OomBabbel</h1>
