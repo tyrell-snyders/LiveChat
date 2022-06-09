@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css"
 
 import Logo from '../assets/logo.svg'
 
@@ -14,20 +16,36 @@ const Register = () => {
         btn: `bg-btn text-white px-8 py-4 font-bold text-base uppercase transition ease-in-out delay 600 hover:bg-btnhov hover:cursor-pointer`,
         q: `text-white`,
         lnk: `text-pinkorpurple font-bold no-underline`
-    }
+    };
     
     //useState
     const [values, setValues] = useState({
         username: "",
         email: "",
         password: "",
-        confirmPass: ""
+        confirmPass: "",
     })
 
     //functions
     const handleSubmit = (e) => {
-        e.preventDeufault()
-        alert('form')
+        e.preventDefault()
+        handleValidation()
+    }
+
+    const handleValidation = () => {
+        const { password, confirmPass, username, email } = values;
+        if (confirmPass !== password) {
+            alert('Hello World Bruh');
+            console.log('password', toast)
+            toast.error('Password and Confirm Password must be the same',
+            {
+                position: "top-right",
+                autoClose: 8000,
+                pauseOnHover: true,
+                draggable: true,
+                theme: 'dark',
+            })
+        }
     }
 
     const handleChange = (ev) => {
@@ -70,6 +88,7 @@ const Register = () => {
                         </span>
                     </form>
             </div>
+            <ToastContainer />
         </>
     )
 }
