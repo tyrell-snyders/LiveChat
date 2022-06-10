@@ -1,12 +1,13 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css"
-
 import Logo from '../assets/logo.svg'
+import {registerRoute} from '../utils/APIRoutes'
+import axios from 'axios'
 
 const Register = () => {
+    //styles
     const styles = {
         formContainer: `w-screen h-screen flex flex-col justify-center items-center bg-secondary`,
         brand: `flex flex-col items-center gap-4 justify-center`,
@@ -25,7 +26,7 @@ const Register = () => {
         pauseOnHover: true,
         draggable: true,
         theme: 'dark',
-    }
+    } //the options for the toastify obj
     
     //useState
     const [values, setValues] = useState({
@@ -35,12 +36,24 @@ const Register = () => {
         confirmPass: "",
     })
 
+    const [userName, setUserName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    
+
     //functions
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (handleValidation()) {
             const { password, confirmPass, username, email } = values;
-            const { data } = await axios.post()
+            //post the data to registerRoute
+            const {data} =  await axios.post(registerRoute, {
+                username,
+                email,
+                password,
+                confirmPass
+            })       
         }
     }
 
@@ -68,12 +81,13 @@ const Register = () => {
 
     const handleChange = (ev) => {
         setValues({ ...values, [ev.target.name]: ev.target.value })
-    }
+    } //assigning the values to the input fields
 
+    //jsx 
     return (
         <>
             <div className={styles.formContainer}>
-                    <form onSubmit={(evnt) => handleSubmit(evnt)} action='/register' className={styles.frm}>
+                    <form className={styles.frm}>
                         <div className={styles.brand}>
                             <img src={Logo} alt="Logo" className={styles.logo} />
                             <h1 className={styles.title}>OomBabbel</h1>
@@ -98,7 +112,7 @@ const Register = () => {
                             type="password" name="confirmPass"
                             placeholder='Confirm Password'
                             onChange={e => handleChange(e)} />
-                        <button type='submit' className={styles.btn}>Create Account</button>
+                        <button type='submit' onClick={ (evnt) => handleSubmit(evnt)} className={styles.btn}>Create Account</button>
                         <span className={styles.light}>
                             Already have an account?
                             <Link to="/login" className={styles.lnk}> Login</Link>

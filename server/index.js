@@ -1,12 +1,15 @@
 const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const userRoutes = require('./routes/userRoutes')
 
 const app = express()
 require('dotenv').config()
 
-app.use(cors) //To avoid problems with CORS in the future on browsers
+app.use(cors())
 app.use(express.json())
+
+app.use('/api/auth', userRoutes)
 
 //mongoose connection
 mongoose.connect(process.env.MONGO_URI, {
@@ -18,7 +21,11 @@ mongoose.connect(process.env.MONGO_URI, {
     console.log(err.message) //Throws an error if it is not connected to the db
 })
 
-//Run the server on the specified port
-const server = app.listen(process.env.PORT, () => {
-    console.log(`Server is running on port ${process.env.PORT}`)
+
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
+
+app.listen(3000, () => {
+    console.log('Server is running on port 3000')
 })

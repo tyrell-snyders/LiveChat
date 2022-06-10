@@ -1,0 +1,1 @@
+export const registerRoute = 'http://localhost:3000/api/auth/register' //setting the url for the register route
