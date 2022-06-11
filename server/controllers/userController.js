@@ -46,6 +46,6 @@ module.exports.login = async(req, res, next) => {
         delete username.password
         return res.json({ status: true })
     } catch (error) {
-
+        next(error)
     }
 }

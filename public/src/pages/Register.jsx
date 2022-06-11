@@ -42,12 +42,12 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (handleValidation()) {
-            const { password, username, email } = values;
+            const { password, username, email } = values
             //post the data to registerRoute
             const {data} =  await axios.post(registerRoute, {
                 username,
                 email,
-                password,
+                password
             })    
             if (data.status === false) {
                 toast.error(data.msg, toastOptions)

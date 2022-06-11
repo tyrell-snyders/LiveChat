@@ -29,6 +29,12 @@ const Login = () => {
 		theme: 'dark',
 	} //the options for the toastify obj
 
+	useEffect(() => {
+		if (localStorage.getItem('chat-app-user')) {
+			navigate('/') //if user already logged in before on the same device, redirect to chat page
+		}
+	}, [])
+
 	//useState
 	const [values, setValues] = useState({
 		username: "",
@@ -38,19 +44,23 @@ const Login = () => {
 	//functions
 	const handleSubmit = async (e) => {
 		e.preventDefault()
-		if (handleValidation()) {
-			const { password, username } = values;
-			//post the data to loginRoute
-			const { data } = await axios.post(loginRoute, {
-				username,
-				password,
-			})
-			if (data.status === false) {
-				toast.error(data.msg, toastOptions)
-			} else {
-				localStorage.setItem('chat-app-user', JSON.stringify(data.user))
-				navigate('/')
+		try {
+			if (handleValidation()) {
+				const { password, username } = values
+				//post the data to loginRoute
+				const { data } = await axios.post(loginRoute, {
+					username,
+					password,
+				})
+				if (data.status === false) {
+					toast.error(data.msg, toastOptions)
+				} else {
+					localStorage.setItem('chat-app-user', JSON.stringify(data.user))
+					navigate('/')
+				}
 			}
+		} catch (error) {
+			toast.error(error.message, toastOptions)	
 		}
 	}
 
