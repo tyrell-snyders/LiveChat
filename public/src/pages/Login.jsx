@@ -56,12 +56,12 @@ const Login = () => {
 
 	const handleValidation = () => {
 		const { password, username } = values;
-		if (username.length < 3) {
-			toast.error('Username must be at least 3 characters',
+		if (username === '') {
+			toast.error('Username and password is required',
 				toastOptions)
 			return false
-		} else if (password.length < 8) {
-			toast.error('Password must be at least 8 or more characters',
+		} else if (password === '') {
+			toast.error('Username and password is required',
 				toastOptions)
 			return false
 		}
@@ -85,6 +85,7 @@ const Login = () => {
 						className={styles.inp}
 						type="text" name="username"
 						placeholder='Username'
+						min="3"
 						onChange={e => handleChange(e)} />
 					<input
 						className={styles.inp}
@@ -94,7 +95,7 @@ const Login = () => {
 					<button type='submit' className={styles.btn}>Login</button>
 					<span className={styles.light}>
 						Don't have an account?
-						<Link to="/register" className={styles.lnk}> Sign Up</Link>
+						<Link to="/register" className={styles.lnk}> Create Account</Link>
 					</span>
 				</form>
 			</div>
