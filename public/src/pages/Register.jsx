@@ -29,6 +29,12 @@ const Register = () => {
         draggable: true,
         theme: 'dark',
     } //the options for the toastify obj
+
+    useEffect(() => {
+		if (localStorage.getItem('chat-app-user')) {
+			navigate('/') //if user already logged in before on the same device, redirect to chat page
+		}
+	}, [])
     
     //useState
     const [values, setValues] = useState({
