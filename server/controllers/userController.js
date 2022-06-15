@@ -4,7 +4,8 @@ const bcrypt = require('bcrypt')
 module.exports.register = async(req, res, next) => {
     try {
         const { username, email, password } = req.body
-            //username
+
+        //username
         const userNameCheck = await User.findOne({ username })
         if (userNameCheck)
             return res.status(400).json({ msg: 'Username already exists', status: false })
@@ -42,9 +43,22 @@ module.exports.login = async(req, res, next) => {
         const isMatch = await bcrypt.compare(password, user.password)
         if (!isMatch)
             return res.status(400).json({ msg: 'Problem with username or password', status: false })
-
         delete username.password
         return res.json({ status: true })
+    } catch (error) {
+        next(error)
+    }
+}
+
+module.exports.setAvatar = async(req, res, next) => {
+    try {
+        const userID = req.params.id
+        const avatarImage = req.body.image
+        const userData = await User.findByIdAndUpdate(userID, {
+            isAvatarImageSet: true,
+            avatarImage
+        })
+        return res.json({ isSet: userData.isAvatarImageSet, avatarImage: userData.avatarImage })
     } catch (error) {
         next(error)
     }

@@ -8,88 +8,129 @@ import { setAvatarRoute } from '../utils/APIRoutes'
 import { Buffer } from 'buffer'
 
 const SetAvatar = () => {
-	//Allow user to upload a profile picture to mongoDB through a form submission
-	const [avatar, setAvatar] = useState(null)
-
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (avatar) {
-            setAvatar(avatar)
-			}
-	}, [avatar])
-
-	const [avatarError, setAvatarError] = useState(null)
-	const [loading, setLoading] = useState(false)
-	const [error, setError] = useState(null)
-	const [errorText, setErrorText] = useState('')
-
-	const handleSubmit = async (e) => {
-		e.preventDefault()
-
-        if (loading) {
-            return
-        }
-
-        try {
-            setLoading(true)
-			const { data } = await axios({
-				method: 'post',
-				url: `${setAvatarRoute}`,
-				data: {
-					avatar,
-					avatarError,
-				},
-				headers: {
-					'Content-Type': 'multipart/form-data',
-				},
-			})
-
-			if (data.status === false) {
-				setAvatarError(data.message)
-				return
-			}
-
-			setAvatar(data)
-			setAvatarError(null)
-			} catch (error) {
-				setAvatarError(error.message)
-            }
-			setLoading(false)
-			}
-			
-	const handleChange = (e) => {
-		setAvatar(e.target.value)
-        setAvatarError(null)
+	// styles
+	const styles = {
+		container: `flex flex-col items-center justify-center h-screen w-screen bg-primary text-white gap-12`,
+		titleContainer: `text-white mb-4`,
+		avatars: `flex flex-row gap-8`,
+		avatar: `border-8 mt-4 
+					border-solid border-transparent grow-0 flex rounded-lg 
+					justify-center items-center`,
+		loader: ``,
+		selected: `border-solid border-pinkorpurple border-8`,
+		btnSumbit: `rounded-3xl bg-btn text-white px-8 py-4 font-bold text-base uppercase transition ease-in-out delay 600 hover:bg-btnhov hover:cursor-pointer`,
 	}
 
+	//api
+	const api = 'https://api.multiavatar.com/57676634'
+	const key = 'eEkbz0lOiwhrcT'
+
+	//navigate
+	const navigate = useNavigate()
+
+	//states
+	const [avatars, setAvatars] = useState([])
+	const [isLoading, setIsLoading] = useState(true)
+	const [selectedAvatar, setSelectedAvatar] = useState(undefined)
+
+	//toast options
+	const toastOptions = {
+		position: "top-right",
+		autoClose: 8000,
+		pauseOnHover: true,
+		draggable: true,
+		theme: 'dark',
+	}
+
+	//ProfilePic
+	const setProfilePic = async () => {
+		if(selectedAvatar === undefined) {
+			toast.error('Please select an avatar', toastOptions)
+		} else {
+			const user = await JSON.parse(localStorage.getItem('chat-app-user'))
+			const {data} = await axios.post(`${setAvatarRoute}/${user._id}`, {
+				image:avatars[selectedAvatar]
+			})
+			if (data.isSet) {
+				user.isAvatarImageSet = true
+				user.avatarImage = data.image
+				localStorage.setItem('chat-app-user', JSON.stringify(user))
+				navigate('/')
+			} else {
+				toast.error('Error setting avatar. Please try again later', toastOptions)
+			}
+		}
+	}
+
+	//useEffects
+	useEffect(() => {
+		const data = []
+		const getImage = async () => {
+			for (let i = 0; i < 4; i++) {
+				const image = await axios.get(
+					`${api}/${Math.round(Math.random() * 50)}?apikey=${key}`
+				)
+				const buffer = new Buffer(image.data)
+				data.push(buffer.toString("base64"))
+			}
+			setAvatars(data)
+			setIsLoading(false)
+		}
+		getImage()
+	}, [])
+
+	//jsx
 	return (
-		<div>
-			<div className="card">
-				<div className="header">
-					<h3 className="card-title mb-3">Upload Image</h3>
-				</div>
-				<div className="content">
-					<form onSubmit={(e) => handleSubmit(e)}>
-						<div className="form-group">
-							<label htmlFor="avatar">Avatar</label>
-							<input type="file" className="form-control form-control-lg" id="avatar" name="avatar" onChange={(e) => handleChange(e)} />
-							{avatarError && <div className="alert alert-danger">{avatarError}</div>}
-							
+		<>
+			{
+				isLoading ? 
+				<div className={styles.container}>
+					<img src={loader} alt="Loading..." className={styles.loader} />
+				</div> 
+				: 
+				(
+					<>
+						<div className={styles.container}>
+							<div className={styles.titleContainer}>
+								<h1>
+									Pick an avatar as your profile picture
+								</h1>
+							</div>
+							<div className={styles.avatars}>
+								{
+									avatars.map((avatar, index) => {
+										return (
+											<div
+												className={`${styles.avatar} ${selectedAvatar === index ? `${styles.selected}` : ''}`}
+												key={index}
+												style={{padding: 3, marginTop: 30, margin: 10, borderRadius: 50}}
+											>
+												<img
+													src={`data:image/svg+xml;base64,${avatar}`}
+													alt="avatar"
+													onClick={() => setSelectedAvatar(index)}
+													style={{ height: 45}}
+													className={styles.ima}
+												/>
+											</div>
+										)
+									})
+								}
+							</div>
+							<button 
+								className={styles.btnSumbit} 
+								onClick={setProfilePic}
+							>
+								Set as profile picture
+							</button>
 						</div>
-						<div className="form-group">
-							<button type="submit" className="btn btn-primary">Submit</button>
-						</div>
-					</form>
-					{loading && <img src={loader} alt="loader" />}
-				</div>
-			</div>
-		</div>
+						<ToastContainer />
+					</>
+				)
+			}
+			
+		</>
 	)
-
-
-
-
 }
 
 export default SetAvatar
