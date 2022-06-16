@@ -48,7 +48,7 @@ const SetAvatar = () => {
 			toast.error('Please select an avatar', toastOptions)
 		} else {
 			const user = await JSON.parse(localStorage.getItem('chat-app-user'))
-			const {data} = await axios.post(`${setAvatarRoute}/${user._id}`, {
+			const { data } = await axios.post(`${setAvatarRoute}/${user._id}`, {
 				image:avatars[selectedAvatar]
 			})
 			if (data.isSet) {
@@ -101,14 +101,17 @@ const SetAvatar = () => {
 									avatars.map((avatar, index) => {
 										return (
 											<div
-												className={`${styles.avatar} ${selectedAvatar === index ? `${styles.selected}` : ''}`}
+												className={`${styles.avatar} ${selectedAvatar === index ? `selected` : ''}`}
 												key={index}
 												style={{padding: 3, marginTop: 30, margin: 10, borderRadius: 50}}
 											>
 												<img
 													src={`data:image/svg+xml;base64,${avatar}`}
 													alt="avatar"
-													onClick={() => setSelectedAvatar(index)}
+													onClick={() => {
+															setSelectedAvatar(index)
+														}
+													}
 													style={{ height: 45}}
 													className={styles.ima}
 												/>

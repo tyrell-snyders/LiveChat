@@ -80,3 +80,13 @@ module.exports.getAllUsers = async(req, res, next) => {
         next(error)
     }
 }
+
+module.exports.getUserAvatar = async(req, res, next) => {
+    try {
+        const userID = req.params.id
+        const userData = await User.findById(userID)
+        return res.json({ avatarImage: userData.avatarImage })
+    } catch (error) {
+        next(error)
+    }
+}
