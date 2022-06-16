@@ -10,7 +10,7 @@ module.exports = {
             white: '#ffffff',
             pinkorpurple: '#4e0eFF',
             primary: '#393E46',
-            secondary: '#ffffff',
+            secondary: '#131324E',
             inpu: '#1C2B2D',
             inpufoc: '#3b6978',
             btn: '#204051',
@@ -22,4 +22,6 @@ module.exports = {
         }
     },
     plugins: [],
+
+
 }
