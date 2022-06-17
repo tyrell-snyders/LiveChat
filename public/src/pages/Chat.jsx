@@ -10,7 +10,8 @@ const Chat = () => {
 	const styles= {
 		screen: `h-screen w-screen flex flex-col 
 					justify-center items-center bg-primary`,
-		container: `h-5/6 w-5/6 bg-primary grid grid-cols-2 rounded-3xl`
+		container: `h-5/6 w-5/6 bg-primary grid grid-cols-2 rounded-3xl`,
+		Cont: `row-span-1`
 	}
 
 	const navigate = useNavigate()	
@@ -60,7 +61,7 @@ const Chat = () => {
 					className={styles.container}
 					style={{backgroundColor: '#00000076'}}
 				>
-					<Contacts contacts={contacts} currentUser={user} />
+					<Contacts contacts={contacts} currentUser={user} className={styles.Cont} />
 				</div>
 			</div>
 		</>

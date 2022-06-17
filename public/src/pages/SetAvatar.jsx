@@ -101,7 +101,7 @@ const SetAvatar = () => {
 									avatars.map((avatar, index) => {
 										return (
 											<div
-												className={`${styles.avatar} ${selectedAvatar === index ? `selected` : ''}`}
+												className={`${styles.avatar} ${selectedAvatar === index ? `${styles.selected}` : ''}`}
 												key={index}
 												style={{padding: 3, marginTop: 30, margin: 10, borderRadius: 50}}
 											>
