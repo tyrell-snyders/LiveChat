@@ -15,10 +15,12 @@ module.exports = {
             inpufoc: '#3b6978',
             btn: '#204051',
             btnhov: `#3b6978`,
+            sel: '#9186f3',
+            user: '#0d0d30',
             text: {
                 DEFAULT: '#1F2937',
                 light: '#6C7281'
-            },
+            }
         }
     },
     plugins: [],

@@ -3,19 +3,28 @@ import Logo from '../assets/logo.svg'
 import {useNavigate} from 'react-router-dom'
 import { getUserAvatar } from '../utils/APIRoutes'
 import axios from 'axios'
+import {useMediaQuery} from 'react-responsive'
 
 const Contacts = ({ contacts, currentUser }) => {
 	//styles
 	const styles = {
-		container: `grid grid-cols-3 overflow-hidden rounded-3xl`,
-		contact: ``,
-		avatar: `mt-4 grow-0 w-8`,
+		container: `grid grid-row-3 overflow-hidden`,
+		avatar: `mt-4 grow-0`,
 		brand: `flex flex-col align-center justify-center`,
-		user: `text-white`,
+		user: `text-white `,
 		title: `text-white uppercase`,
 		contacts: `flex flex-col align-center overflow-auto gap-3`,
-		contact: ``
+		username: `text-white mt-7 grow-0`,
+		contact: 'rounded cursor-pointer transition ease-in-out delay-150',
+		con: `rounded align-center flex`,
+		selected: `bg-sel`,
+		currentuser: `bg-user justify-center align-center flex gap-8`,
+		mobileUser: `bg-user justify-center align-center flex gap-2 text-xs`
 	}
+
+	//MediaQueries
+	const isMobile = useMediaQuery({ maxWidth: 720})
+	const isLandScape = useMediaQuery({minWidth: 721})
 
 	//states
 	const [currentUserName, setCurrentUserName] = useState(undefined)
@@ -25,6 +34,7 @@ const Contacts = ({ contacts, currentUser }) => {
 	//useEffects
 	useEffect(() => {
 		const setUser = async () => {
+			console.log(contacts)
 			if (currentUser) {
 				const userImage = await axios.get(`${getUserAvatar}/${currentUser._id}`)
 				setCurrentUserImage(userImage.data.avatarImage)
@@ -36,7 +46,7 @@ const Contacts = ({ contacts, currentUser }) => {
 
 	//functions
 	const changeCurrentChat = (index, contact) => {
-
+	
 	}
 	
 	//jsx
@@ -47,48 +57,70 @@ const Contacts = ({ contacts, currentUser }) => {
 					<div className={styles.container}
 						style={{backgroundColor: '#080420', overflow: 'hidden'}}
 					>
-						<div className={styles.brand}>
-							<img src={Logo} alt="Logo" />
+						<div className={styles.brand} style={{alignItems: 'center'}}>
+							<img src={Logo} alt="Logo" style={{width: '75px'}} />
 							<h3  className={styles.title}>OomBabbel</h3>
 						</div>
-						<div className={styles.contacts}>
+						<div className={styles.contacts} style={{ margin: '20px 10px'}}>
 							{
 								contacts.map((contact, index) => {
-									<div 
-										className={
-											`
-												${styles.contact}
-											 	${index === currentSelectedUser ? `${selected}` : ""}
-											`
-										} 
-										key={index}
-										style={{ backgroundColor: '#ffffff39'}}
-									>
-										<div className={styles.avatar}>
-											<img 
-												src={`data:image/svg+xml;base64,${contact.avatarImage}`}
-												alt="avatar" 
-		
-											/>
+									return (
+										<>
+										<div 
+											className={
+												`${styles.contact} ${index === currentSelectedUser ? `${selected}` : ''}`
+											} 
+											key={index}
+											
+										>
+											<div className={styles.con} style={{margin:'10px',  backgroundColor: '#ffffff39'}}>
+												<div className={styles.avatar}>
+													<img 
+														src={`data:image/svg+xml;base64,${contact.avatarImage}`}
+														alt="avatar" 
+														style={{width: '50px', margin:'5px'}}
+													/>
+												</div>
+												<div className={styles.username} style={{marginLeft: '10px', marginRight: '10px'}}>
+													<h3>{contact.username}</h3>
+												</div>
+											</div>
 										</div>
-										<div className={styles.username}>
-											<h3>{contact.username}</h3>
-										</div>
-									</div>
+									</>
+									)
 								})
-							}
+							}	
 						</div>
-						<div className={styles.currentuser}>
+						{
+							isLandScape &&
+							<div className={styles.currentuser}>
+								<div className={styles.avatar}>
+									<img 
+										src={`data:image/svg+xml;base64,${currentUserImage}`}
+										alt="avatar" 
+										style={{width: '4rem', maxInlineSize: '100%'}}
+									/>
+								</div>
+								<div className={styles.username}>
+									<h2 className={styles.user}>{currentUserName}</h2>
+								</div>
+							</div>
+						}
+						{
+							isMobile &&
+							<div className={styles.mobileUser}>
 							<div className={styles.avatar}>
 								<img 
 									src={`data:image/svg+xml;base64,${currentUserImage}`}
 									alt="avatar" 
+									style={{width: '4rem', maxInlineSize: '100%'}}
 								/>
 							</div>
 							<div className={styles.username}>
 								<h2 className={styles.user}>{currentUserName}</h2>
 							</div>
 						</div>
+						}
 					</div> 
 				)
 			}

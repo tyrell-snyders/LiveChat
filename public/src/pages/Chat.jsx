@@ -10,14 +10,15 @@ const Chat = () => {
 	const styles= {
 		screen: `h-screen w-screen flex flex-col 
 					justify-center items-center bg-primary`,
-		container: `h-5/6 w-5/6 bg-primary grid grid-cols-2 rounded-3xl`,
-		Cont: `row-span-1`
+		container: `h-screen w-screen bg-primary grid grid-rows-1 grid-flow-col`,
+		Cont: `row-span-2`,
+		chat: `row-span-1`
 	}
 
 	const navigate = useNavigate()	
 
-	//MediaQuery
-	// const isMobile = useMediaQuery({ maxWidth: 390, maxHeight: 840 })
+	const isMobile = useMediaQuery({ maxWidth: 720})
+	const isLandScape = useMediaQuery({minWidth: 721})
 
 	//Use States
 	const [contacts, setContacts] = useState([])
@@ -52,17 +53,36 @@ const Chat = () => {
 		}
 		getContacts()
 	},[currentUser]) //if there is a current user call the api
+
 	
 	//jsx
 	return (
 		<>
 			<div className={styles.screen}>
-				<div 
-					className={styles.container}
-					style={{backgroundColor: '#00000076'}}
-				>
-					<Contacts contacts={contacts} currentUser={user} className={styles.Cont} />
-				</div>
+				{isMobile && 
+					<>
+						<div 
+							className={styles.container}
+							style={{backgroundColor: '#00000076', gridTemplateColumns: '40% 60%'}}
+						>
+							<Contacts contacts={contacts} currentUser={user} className={styles.Cont} />
+							<div className={styles.chat}>Hello</div>
+						</div>
+					</>
+					
+				}  
+				{
+					isLandScape &&
+					<>
+						<div 
+							className={styles.container}
+							style={{backgroundColor: '#00000076', gridTemplateColumns: '25% 75%'}}
+						>
+							<Contacts contacts={contacts} currentUser={user} className={styles.Cont} />
+							<div className={styles.chat}>Hello</div>
+						</div>
+					</>
+				}
 			</div>
 		</>
 	)
