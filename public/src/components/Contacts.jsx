@@ -4,13 +4,14 @@ import {useNavigate} from 'react-router-dom'
 import { getUserAvatar } from '../utils/APIRoutes'
 import axios from 'axios'
 import {useMediaQuery} from 'react-responsive'
+import '../styles/tailwind.css'
 
 const Contacts = ({ contacts, currentUser }) => {
 	//styles
 	const styles = {
 		container: `grid grid-row-3 overflow-hidden`,
 		avatar: `mt-4 grow-0`,
-		brand: `flex flex-col align-center justify-center`,
+		brand: `flex align-center justify-center`,
 		user: `text-white `,
 		title: `text-white uppercase`,
 		contacts: `flex flex-col align-center overflow-auto gap-3`,
@@ -48,7 +49,7 @@ const Contacts = ({ contacts, currentUser }) => {
 	const changeCurrentChat = (index, contact) => {
 	
 	}
-	
+	11
 	//jsx
 	return (
 		<>
@@ -58,10 +59,12 @@ const Contacts = ({ contacts, currentUser }) => {
 						style={{backgroundColor: '#080420', overflow: 'hidden'}}
 					>
 						<div className={styles.brand} style={{alignItems: 'center'}}>
-							<img src={Logo} alt="Logo" style={{width: '75px'}} />
-							<h3  className={styles.title}>OomBabbel</h3>
+							<img src={Logo} alt="Logo" style={{width: '45px'}} />
+							<h3  className={styles.title}
+								style={{marginLeft: '20px'}}
+							>OomBabbel</h3>
 						</div>
-						<div className={styles.contacts} style={{ margin: '20px 10px'}}>
+						<div className={styles.contacts} >
 							{
 								contacts.map((contact, index) => {
 									return (
@@ -71,9 +74,96 @@ const Contacts = ({ contacts, currentUser }) => {
 												`${styles.contact} ${index === currentSelectedUser ? `${selected}` : ''}`
 											} 
 											key={index}
+											style={{marginLeft: '10px', marginRight: '10px', marginBottom: '20px',  backgroundColor: '#ffffff39'}}
 											
 										>
-											<div className={styles.con} style={{margin:'10px',  backgroundColor: '#ffffff39'}}>
+											<div className={styles.con} >
+												<div className={styles.avatar}>
+													<img 
+														src={`data:image/svg+xml;base64,${contact.avatarImage}`}
+														alt="avatar" 
+														style={{width: '50px', margin:'5px'}}
+													/>
+												</div>
+												<div className={styles.username} style={{marginLeft: '10px', marginRight: '10px'}}>
+													<h3>{contact.username}</h3>
+												</div>
+											</div>
+										</div>
+									</>
+									)
+								})
+							}
+							{
+								contacts.map((contact, index) => {
+									return (
+										<>
+										<div 
+											className={
+												`${styles.contact} ${index === currentSelectedUser ? `${selected}` : ''}`
+											} 
+											key={index}
+											style={{marginLeft: '10px', marginRight: '10px', marginBottom: '20px',  backgroundColor: '#ffffff39'}}
+											
+										>
+											<div className={styles.con} >
+												<div className={styles.avatar}>
+													<img 
+														src={`data:image/svg+xml;base64,${contact.avatarImage}`}
+														alt="avatar" 
+														style={{width: '50px', margin:'5px'}}
+													/>
+												</div>
+												<div className={styles.username} style={{marginLeft: '10px', marginRight: '10px'}}>
+													<h3>{contact.username}</h3>
+												</div>
+											</div>
+										</div>
+									</>
+									)
+								})
+							}
+							{
+								contacts.map((contact, index) => {
+									return (
+										<>
+										<div 
+											className={
+												`${styles.contact} ${index === currentSelectedUser ? `${selected}` : ''}`
+											} 
+											key={index}
+											style={{marginLeft: '10px', marginRight: '10px', marginBottom: '20px',  backgroundColor: '#ffffff39'}}
+											
+										>
+											<div className={styles.con} >
+												<div className={styles.avatar}>
+													<img 
+														src={`data:image/svg+xml;base64,${contact.avatarImage}`}
+														alt="avatar" 
+														style={{width: '50px', margin:'5px'}}
+													/>
+												</div>
+												<div className={styles.username} style={{marginLeft: '10px', marginRight: '10px'}}>
+													<h3>{contact.username}</h3>
+												</div>
+											</div>
+										</div>
+									</>
+									)
+								})
+							}{
+								contacts.map((contact, index) => {
+									return (
+										<>
+										<div 
+											className={
+												`${styles.contact} ${index === currentSelectedUser ? `${selected}` : ''}`
+											} 
+											key={index}
+											style={{marginLeft: '10px', marginRight: '10px', marginBottom: '20px',  backgroundColor: '#ffffff39'}}
+											
+										>
+											<div className={styles.con} >
 												<div className={styles.avatar}>
 													<img 
 														src={`data:image/svg+xml;base64,${contact.avatarImage}`}
