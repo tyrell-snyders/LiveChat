@@ -9,35 +9,35 @@ const chatContainer = ({currentChat}) => {
         username: `text-white`
     }
 
-  return (
-    <>
-        {currentChat && (
-            <div className={styles.container} style={{paddingTop: '1rem'}}>
-                <div className={styles.chat_header}>
-                    <div className={styles.user_details}>
-                        <div className={styles.avatar}>
-                            <img 
-                                src={`data:image/svg+xml;base64,${currentChat.avatarImage}`} 
-                                alt="avatar"
-                                style={{height: '3rem'}} 
-                            />
-                        </div>
-                        <div className={styles.username}>
-                            <h3>{currentChat.username}</h3>
+    return (
+        <>
+            {currentChat && (
+                <div className={styles.container} style={{paddingTop: '1rem'}}>
+                    <div className={styles.chat_header}>
+                        <div className={styles.user_details}>
+                            <div className={styles.avatar}>
+                                <img 
+                                    src={`data:image/svg+xml;base64,${currentChat.avatarImage}`} 
+                                    alt="avatar"
+                                    style={{height: '3rem'}} 
+                                />
+                            </div>
+                            <div className={styles.username}>
+                                <h3>{currentChat.username}</h3>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div className={styles.msg}>
-    
+                    <div className={styles.msg}>
+        
+                    </div>
+                    <div className={styles.inp}>
+        
+                    </div>
                 </div>
-                <div className={styles.inp}>
-    
-                </div>
-            </div>
-        )}
-    </>
-  )
+            )}
+        </>
+    )
 }
 
 export default chatContainer

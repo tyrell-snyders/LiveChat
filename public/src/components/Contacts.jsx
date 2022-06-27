@@ -4,6 +4,7 @@ import { getUserAvatar } from '../utils/APIRoutes'
 import axios from 'axios'
 import {useMediaQuery} from 'react-responsive'
 import '../styles/tailwind.css'
+import Logout from './Logout'
 
 const Contacts = ({ contacts, currentUser, changeChat }) => {
 	//styles
@@ -18,8 +19,8 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
 		contact: 'rounded bg-primary cursor-pointer transition ease-in-out delay-50',
 		con: `rounded align-center flex`,
 		selected: `bg-btn`,
-		currentuser: `bg-user justify-center align-center flex gap-8`,
-		mobileUser: `bg-user justify-center align-center flex gap-2 text-xs`
+		currentuser: `bg-user justify-center align-center flex flex-col gap-8`,
+		mobileUser: `bg-user justify-center align-center flex flex-col gap-2 text-xs`
 	}
 
 	//MediaQueries
@@ -98,7 +99,7 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
 							</div>
 						{
 							isLandScape &&
-							<div className={styles.currentuser}>
+							<div className={styles.currentuser}  style={{paddingLeft: '10px'}}>
 								<div className={styles.avatar}>
 									<img 
 										src={`data:image/svg+xml;base64,${currentUserImage}`}
@@ -109,22 +110,29 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
 								<div className={styles.username}>
 									<h2 className={styles.user}>{currentUserName}</h2>
 								</div>
+								<div className={styles.logout}>
+									<Logout />
+								</div>
 							</div>
 						}
 						{
 							isMobile &&
-							<div className={styles.mobileUser}>
-							<div className={styles.avatar}>
-								<img 
-									src={`data:image/svg+xml;base64,${currentUserImage}`}
-									alt="avatar" 
-									style={{width: '4rem', maxInlineSize: '100%'}}
-								/>
+							<div className={styles.mobileUser} style={{paddingLeft: '10px'}}>
+								<div className={styles.avatar}>
+									<img 
+										src={`data:image/svg+xml;base64,${currentUserImage}`}
+										alt="avatar" 
+										style={{width: '4rem', maxInlineSize: '100%'}}
+									/>
+								</div>
+								<div className={styles.username}>
+									<h2 className={styles.user}>{currentUserName}</h2>
+								</div>
+								<div className={styles.logout}>
+									<Logout />
+								</div>
 							</div>
-							<div className={styles.username}>
-								<h2 className={styles.user}>{currentUserName}</h2>
-							</div>
-						</div>
+							
 						}
 					</div> 
 				)
