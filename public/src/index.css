@@ -27,16 +27,8 @@ body {
 /* width */
 
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 4px;
     height: 8px;
-}
-
-
-/* Track */
-
- ::-webkit-scrollbar-track {
-    border-radius: 20px;
-    background: #1d043a;
 }
 
 

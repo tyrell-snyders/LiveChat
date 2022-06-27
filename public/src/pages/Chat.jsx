@@ -4,6 +4,7 @@ import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 import { allUserRoute } from '../utils/APIRoutes'
 import Contacts from '../components/Contacts'
+import Welcome from '../components/Welcome'
 
 const Chat = () => {
 	//styles
@@ -24,6 +25,7 @@ const Chat = () => {
 	const [contacts, setContacts] = useState([])
 	const [currentUser, setCurrentUser] = useState(undefined)
 	const [user, setUser] = useState(undefined)
+	const [currentChat, setCurrentChat] = useState(undefined)
 
 	//UseEffect
 	useEffect(() => {
@@ -54,6 +56,11 @@ const Chat = () => {
 		getContacts()
 	},[currentUser]) //if there is a current user call the api
 
+	//functions
+	const handleChatChange = (chat) => {
+		setCurrentChat(chat)
+	}
+
 	
 	//jsx
 	return (
@@ -65,11 +72,12 @@ const Chat = () => {
 							className={styles.container}
 							style={{backgroundColor: '#00000076', gridTemplateColumns: '40% 60%'}}
 						>
-							<Contacts contacts={contacts} currentUser={user} className={styles.Cont} />
-							<div className={styles.chat}>Hello</div>
+							<Contacts contacts={contacts} currentUser={user} changeChat={handleChatChange} className={styles.Cont} />
+							<div className={styles.chat}>
+								<Welcome currentUser={user} />
+							</div>
 						</div>
 					</>
-					
 				}  
 				{
 					isLandScape &&
@@ -79,7 +87,9 @@ const Chat = () => {
 							style={{backgroundColor: '#00000076', gridTemplateColumns: '25% 75%'}}
 						>
 							<Contacts contacts={contacts} currentUser={user} className={styles.Cont} />
-							<div className={styles.chat}>Hello</div>
+							<div className={styles.chat}>
+								<Welcome currentUser={user} />
+							</div>
 						</div>
 					</>
 				}
