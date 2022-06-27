@@ -27,6 +27,7 @@ const Chat = () => {
 	const [currentUser, setCurrentUser] = useState(undefined)
 	const [user, setUser] = useState(undefined)
 	const [currentChat, setCurrentChat] = useState(undefined)
+	const [isLoaded, setIsLoaded] = useState(false)
 
 	//UseEffect
 	useEffect(() => {
@@ -48,7 +49,7 @@ const Chat = () => {
 					const data = await axios.get(`${allUserRoute}/${currentUser._id}`) //get all users except the current user
 					setContacts(data.data)
 					setUser(currentUser)
-					
+					setIsLoaded(true)
 				} else {
 					navigate('/setAvatar')
 				}
@@ -76,9 +77,12 @@ const Chat = () => {
 							<Contacts contacts={contacts} currentUser={user} changeChat={handleChatChange} className={styles.Cont} />
 							<div className={styles.chat}>
 								{
-									currentChat === undefined ? 
+									isLoaded && currentChat === undefined ? 
 									(<Welcome currentUser={user} />):
-									(<ChatCont currentUser={user} />)
+									(
+										
+										<ChatCont currentChat={currentChat} />
+									)
 								}
 								
 							</div>
@@ -95,9 +99,9 @@ const Chat = () => {
 							<Contacts contacts={contacts} currentUser={user} className={styles.Cont} />
 							<div className={styles.chat}>
 								{
-									currentChat === undefined ? 
+									isLoaded && currentChat === undefined ? 
 									(<Welcome currentUser={user} />):
-									(<ChatCont currentUser={user} />)
+									(<ChatCont currentChat={currentChat} />)
 								}
 							</div>
 						</div>
