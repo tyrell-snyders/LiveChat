@@ -12,6 +12,7 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
 		container: `grid grid-row-3 overflow-hidden`,
 		avatar: `mt-4 grow-0`,
 		brand: `flex align-center justify-center`,
+		brandMob: `flex flex-col align-center justify-center`,
 		user: `text-white `,
 		title: `text-white uppercase`,
 		contacts: `flex flex-col align-center overflow-auto gap-3`,
@@ -59,12 +60,23 @@ const Contacts = ({ contacts, currentUser, changeChat }) => {
 					<div className={styles.container}
 						style={{backgroundColor: '#080420', overflow: 'hidden'}}
 					>
-						<div className={styles.brand} style={{alignItems: 'center'}}>
-							<img src={Logo} alt="Logo" style={{width: '45px'}} />
-							<h3  className={styles.title}
-								style={{marginLeft: '20px'}}
-							>OomBabbel</h3>
-						</div>
+						{isMobile && (
+							<div className={styles.brandMob} style={{alignItems: 'center'}}>
+								<img src={Logo} alt="Logo" style={{width: '45px'}} />
+								<h3  className={styles.title}
+									style={{marginLeft: '20px'}}
+								>OomBabbel</h3>
+							</div>
+						)}
+						{isLandScape && (
+							<div className={styles.brand} style={{alignItems: 'center'}}>
+								<img src={Logo} alt="Logo" style={{width: '45px'}} />
+								<h3  className={styles.title}
+									style={{marginLeft: '20px'}}
+								>OomBabbel</h3>
+							</div>
+						)}
+						
 							<div className={styles.contacts}>
 								{
 									contacts.map((contact, index) => {

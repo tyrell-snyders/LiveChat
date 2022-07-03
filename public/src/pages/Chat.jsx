@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom'
 import { allUserRoute } from '../utils/APIRoutes'
 import Contacts from '../components/Contacts'
 import Welcome from '../components/Welcome'
-import ChatCont from '../components/chatContainer'
+import ChatContainer from '../components/ChatContainer'
 
 const Chat = () => {
 	//styles
@@ -63,7 +63,6 @@ const Chat = () => {
 		setCurrentChat(chat)
 	}
 
-	
 	//jsx
 	return (
 		<>
@@ -79,12 +78,8 @@ const Chat = () => {
 								{
 									isLoaded && currentChat === undefined ? 
 									(<Welcome currentUser={user} />):
-									(
-										
-										<ChatCont currentChat={currentChat} />
-									)
+									(<ChatContainer currentChat={currentChat} />)
 								}
-								
 							</div>
 						</div>
 					</>
@@ -96,12 +91,12 @@ const Chat = () => {
 							className={styles.container}
 							style={{backgroundColor: '#00000076', gridTemplateColumns: '25% 75%'}}
 						>
-							<Contacts contacts={contacts} currentUser={user} className={styles.Cont} />
+							<Contacts contacts={contacts} currentUser={user} changeChat={handleChatChange} className={styles.Cont} />
 							<div className={styles.chat}>
 								{
 									isLoaded && currentChat === undefined ? 
 									(<Welcome currentUser={user} />):
-									(<ChatCont currentChat={currentChat} />)
+									(<ChatContainer currentChat={currentChat} />)
 								}
 							</div>
 						</div>

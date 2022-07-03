@@ -79,6 +79,12 @@ const SetAvatar = () => {
 		getImage()
 	}, [])
 
+	useEffect(() => {
+		if(!localStorage.getItem('chat-app-user')) {
+			navigate('/login')
+		}
+	}, [])
+
 	//jsx
 	return (
 		<>

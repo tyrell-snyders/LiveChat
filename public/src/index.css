@@ -45,3 +45,11 @@ body {
  ::-webkit-scrollbar-thumb:hover {
     background: #3d098c;
 }
+
+.emoji-picker-react {
+    position: absolute;
+    top: -350px;
+    box-shadow: 0.5px 10px #9a86F3;
+    border-color: #9a86F3;
+    width: 20px;
+}

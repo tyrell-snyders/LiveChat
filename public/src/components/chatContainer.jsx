@@ -1,12 +1,21 @@
 import React from 'react'
+import ChatInput from './ChatInput'
+import Messages from './Messages'
 
-const chatContainer = ({currentChat}) => {
+const ChatContainer = ({currentChat}) => {
+    //styles
     const styles = {
-        container: ``,
+        container: `h-full`,
         chat_header: `flex justify-between items-center p-1`,
         user_details: `flex items-center gap-4`,
         avatar: `h-12`,
-        username: `text-white`
+        username: `text-white`,
+        chatInp: `flex flex-col align-center`
+    }
+
+    //functions
+    const handleSendMsg = async (msg) => {
+        
     }
 
     return (
@@ -27,17 +36,12 @@ const chatContainer = ({currentChat}) => {
                             </div>
                         </div>
                     </div>
-
-                    <div className={styles.msg}>
-        
-                    </div>
-                    <div className={styles.inp}>
-        
-                    </div>
+                        <Messages />
+                        <ChatInput handleSendMessage={handleSendMsg} />
                 </div>
             )}
         </>
     )
 }
 
-export default chatContainer
+export default ChatContainer
