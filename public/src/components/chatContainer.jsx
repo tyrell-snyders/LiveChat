@@ -24,6 +24,7 @@ const ChatContainer = ({currentChat,  currentUser}) => {
         })
     }
 
+    //jsx
     return (
         <>
             {currentChat && (

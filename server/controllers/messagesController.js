@@ -16,5 +16,25 @@ module.exports.addMsg = async(req, res, next) => {
 }
 
 module.exports.getAllMsg = async(req, res, next) => {
+    try {
+        const { from, to } = req.body
+        const messages = await messageModel.find({ //gets all messages from the user
+            users: {
+                $all: [
+                    from,
+                    to
+                ]
+            }
+        }).sort({ updatedAt: 1 })
 
+        const showMessages = messages.map((msg) => {
+            return {
+                fromSelf: msg.sender.toString() === from, //converts the user id to string and compares it to the id string that is stored in from
+                message: msg.message.text,
+            }
+        })
+        res.json(showMessages)
+    } catch (ex) {
+        next(ex)
+    }
 }
