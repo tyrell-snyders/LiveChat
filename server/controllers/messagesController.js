@@ -1,3 +1,4 @@
+const messageModel = require('../model/messageModel')
 module.exports.addMsg = async(req, res, next) => {
     try {
         const { from, to, message } = req.body

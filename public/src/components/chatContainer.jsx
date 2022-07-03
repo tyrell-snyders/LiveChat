@@ -1,8 +1,10 @@
 import React from 'react'
 import ChatInput from './ChatInput'
 import Messages from './Messages'
+import axios from 'axios'
+import { sendMsgRoute } from '../utils/APIRoutes'
 
-const ChatContainer = ({currentChat}) => {
+const ChatContainer = ({currentChat,  currentUser}) => {
     //styles
     const styles = {
         container: `h-full`,
@@ -15,7 +17,11 @@ const ChatContainer = ({currentChat}) => {
 
     //functions
     const handleSendMsg = async (msg) => {
-        
+        await axios.post(sendMsgRoute, {
+            from:currentUser._id,
+            to: currentChat._id,
+            message: msg
+        })
     }
 
     return (

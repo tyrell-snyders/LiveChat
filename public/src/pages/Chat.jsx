@@ -78,7 +78,7 @@ const Chat = () => {
 								{
 									isLoaded && currentChat === undefined ? 
 									(<Welcome currentUser={user} />):
-									(<ChatContainer currentChat={currentChat} />)
+									(<ChatContainer currentChat={currentChat} currentUser={currentUser} />)
 								}
 							</div>
 						</div>
@@ -96,7 +96,7 @@ const Chat = () => {
 								{
 									isLoaded && currentChat === undefined ? 
 									(<Welcome currentUser={user} />):
-									(<ChatContainer currentChat={currentChat} />)
+									(<ChatContainer currentChat={currentChat} currentUser={currentUser} />)
 								}
 							</div>
 						</div>
