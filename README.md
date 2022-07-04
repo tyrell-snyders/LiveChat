@@ -7,7 +7,6 @@ Live Chat app that uses MERN and SocketIO including tailwindCSS
 
 SocektIO - coming soon
 
-
 ## Installing dependencies
 ### React live-chat
   cd into public/live-chat/ then run `npm i` in your terminal
@@ -23,8 +22,8 @@ SocektIO - coming soon
 ## Enviroment Variables
   In ther server folder add a .env file in there to store your MONGODB links and stuff you don't want to be leaked out to the internt yea :/
   
-#Dependecies used:
-  ##Server:
+## Dependecies used
+### Server
     bcrypt
     cors
     dotenv
@@ -33,7 +32,7 @@ SocektIO - coming soon
     multer
     socket.io
    
-  ##Public:
+### Public
     axios
     buffer
     emoji-picker
@@ -47,5 +46,5 @@ SocektIO - coming soon
     tailwind-scrollbar
     autopefixer
 
-##NB!:
+## NB!
   Mobile support will be implemented soon
