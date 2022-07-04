@@ -1,5 +1,12 @@
 # LiveChat
-Live Chat app
+Live Chat app that uses MERN and SocketIO including tailwindCSS
+  M - MongoDB
+  E - ExpressJs
+  R - ReactJs
+  N -NodeJs
+
+SocektIO - coming soon
+
 
 ## Installing dependencies
 ### React live-chat
@@ -15,3 +22,30 @@ Live Chat app
 
 ## Enviroment Variables
   In ther server folder add a .env file in there to store your MONGODB links and stuff you don't want to be leaked out to the internt yea :/
+  
+#Dependecies used:
+  ##Server:
+    bcrypt
+    cors
+    dotenv
+    express
+    mongoose
+    multer
+    socket.io
+   
+  ##Public:
+    axios
+    buffer
+    emoji-picker
+    react-dom
+    react-icons
+    react-responsive
+    react-router-dom
+    react-toastify
+    postcss
+    tailwindcss
+    tailwind-scrollbar
+    autopefixer
+
+##NB!:
+  Mobile support will be implemented soon
