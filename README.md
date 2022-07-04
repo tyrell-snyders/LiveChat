@@ -1,9 +1,10 @@
 # LiveChat
 Live Chat app that uses MERN and SocketIO including tailwindCSS
-  M - MongoDB
-  E - ExpressJs
-  R - ReactJs
-  N -NodeJs
+  
+    M - MongoDB
+    E - ExpressJs
+    R - ReactJs
+    N -NodeJs
 
 SocektIO - coming soon
 
