@@ -95,7 +95,7 @@ const ChatContainer = ({currentChat,  currentUser}) => {
                         </div>
                         <ChatInput handleSendMessage={handleSendMsg} />
                 </div>
-            )} 
+            )}
             {currentChat && isMobile && (
                 <div className={styles.container} style={{paddingTop: '1rem', gridTemplateRows: '15% 80% 4%', gap: '0.1rem'}}>
                     <div className={styles.chat_header}>

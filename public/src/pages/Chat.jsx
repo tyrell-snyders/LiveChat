@@ -9,6 +9,7 @@ import ChatContainer from '../components/ChatContainer'
 
 const Chat = () => {
 	//styles
+	
 	const styles= {
 		screen: `h-screen w-screen flex flex-col 
 					justify-center items-center bg-primary`,
@@ -50,6 +51,7 @@ const Chat = () => {
 					setContacts(data.data)
 					setUser(currentUser)
 					setIsLoaded(true)
+					alert('Full mobile support will be available soon. :/')
 				} else {
 					navigate('/setAvatar')
 				}
