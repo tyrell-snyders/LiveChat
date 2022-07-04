@@ -7,10 +7,10 @@ const ChatInput = ({handleSendMessage}) => {
     //styles
     const styles = {
         container: `grid align-center justify-center px-8 pb-1`,
-        btnCont: `align-center flex gap-4 cursor-pointer`,
+        btnCont: `align-center flex cursor-pointer text-3xl`,
         emoji: `absolute text-2xl`,
         inputCont: `w-full flex align-center gap-8 rounded-3xl`,
-        submit: `flex py-1 px-8 rounded-3xl justif-center align-center border-none text-lg text-white`,
+        submit: `flex py-2 px-8 rounded-3xl justif-center align-center border-none text-lg text-white`,
         inp: `text-white focus:outline-none`
     }
 
@@ -42,8 +42,8 @@ const ChatInput = ({handleSendMessage}) => {
     //jsx
     return (
         <div className={styles.container}  style={{gridTemplateColumns: '5% 95%', backgroundColor: '#080420'}}>
-            <div className={styles.btnCont}>
-                <div className={styles.emoji} style={{color: '#ffff00c8'}}>
+            <div className={styles.btnCont} style={{ gap: '2rem'}}>
+                <div className={styles.emoji} style={{color: '#ffff00c8', fontSize: '1.5rem', paddingTop: '0.35rem'}}>
                     <BsEmojiSmileFill onClick={handleEmojiPickerHS} />
                     {
                         showEmojiPicker && <Picker onEmojiClick={handleEmojiClick}/>

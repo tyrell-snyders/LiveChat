@@ -29,7 +29,7 @@ module.exports.getAllMsg = async(req, res, next) => {
 
         const showMessages = messages.map((msg) => {
             return {
-                fromSelf: msg.sender.toString() === from, //converts the user id to string and compares it to the id string that is stored in from
+                fromSelf: msg.sender.toString() === from, //converts the user id to string and compares it to the id string that is stored in from and returns a boolean
                 message: msg.message.text,
             }
         })

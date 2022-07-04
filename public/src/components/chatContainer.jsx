@@ -7,14 +7,14 @@ import { getMsgRoute, sendMsgRoute } from '../utils/APIRoutes'
 const ChatContainer = ({currentChat,  currentUser}) => {
     //styles
     const styles = {
-        container: `h-full`,
+        container: `h-full grid`,
         chat_header: `flex justify-between items-center p-1`,
         user_details: `flex items-center gap-4`,
         avatar: `h-12`,
         username: `text-white`,
         chatInp: `flex flex-col align-center`,
         chat_messages: `py-4 px-8 flex flex-col gap-4 overflow-auto`,
-        message: `flex align-center justify-end`,
+        message: `flex align-center`,
         sended: `justify-end`,
         recieved: ``,
         content: `max-w-2/5 break-words p-4 text-sm rounded-2xl text-white`
@@ -22,17 +22,7 @@ const ChatContainer = ({currentChat,  currentUser}) => {
 
     //useStates
     const [messages, setMessages] = useState([])
-
-    //useEffects
-    useEffect(() => {
-        return async () => {
-            const res = await axios.post(getMsgRoute, {
-                from: currentUser._id,
-                to: currentChat._id
-            })
-            setMessages(res.data)
-        }
-    }, [currentChat])
+    
     
     //functions
     const handleSendMsg = async (msg) => {
@@ -43,11 +33,23 @@ const ChatContainer = ({currentChat,  currentUser}) => {
         })
     }
 
+    //useEffects
+    useEffect(() => {
+        const getFromSelf = async () => {
+            const res = await axios.post(getMsgRoute, {
+                from: currentUser._id,
+                to: currentChat._id
+            })
+            setMessages(res.data)
+        }
+        getFromSelf()
+    }, [currentChat])
+
     //jsx
     return (
         <>
             {currentChat && (
-                <div className={styles.container} style={{paddingTop: '1rem'}}>
+                <div className={styles.container} style={{paddingTop: '1rem', gridTemplateRows: '15% 80% 5%'}}>
                     <div className={styles.chat_header}>
                         <div className={styles.user_details}>
                             <div className={styles.avatar}>
@@ -64,15 +66,19 @@ const ChatContainer = ({currentChat,  currentUser}) => {
                     </div>
                         <div className={styles.chat_messages}>
                             {
+                                
                                 messages.map((message) => {
                                     return (
                     
                                             <div>
                                                 <div className={
-                                                        `${styles.message} ${message.fromSelf ? `${styles.sended}` : `${styles.recieved}`}`
-                                                    }
+                                                    `${styles.message} ${message.fromSelf ? `${styles.sended}` : `${styles.recieved}`}`
+                                                }
                                                 >
-                                                    <div className={styles.content}>
+                                                    <div 
+                                                        className={styles.content}
+                                                        style={message.fromSelf ? {backgroundColor: '#4f04ff21'} : {backgroundColor: '#9900ff20'}}
+                                                    >
                                                         <p>
                                                             {message.message}
                                                         </p>
