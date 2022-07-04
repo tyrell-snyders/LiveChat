@@ -13,10 +13,11 @@ const ChatContainer = ({currentChat,  currentUser}) => {
         avatar: `h-12`,
         username: `text-white`,
         chatInp: `flex flex-col align-center`,
-        chat_messages: ``,
-        message: ``,
-        sended: ``,
-        recieved: ``
+        chat_messages: `py-4 px-8 flex flex-col gap-4 overflow-auto`,
+        message: `flex align-center justify-end`,
+        sended: `justify-end`,
+        recieved: ``,
+        content: `max-w-2/5 break-words p-4 text-sm rounded-2xl text-white`
     }
 
     //useStates
@@ -33,11 +34,10 @@ const ChatContainer = ({currentChat,  currentUser}) => {
         }
     }, [currentChat])
     
-
     //functions
     const handleSendMsg = async (msg) => {
         await axios.post(sendMsgRoute, {
-            from:currentUser._id,
+            from: currentUser._id,
             to: currentChat._id,
             message: msg
         })
@@ -65,11 +65,13 @@ const ChatContainer = ({currentChat,  currentUser}) => {
                         <div className={styles.chat_messages}>
                             {
                                 messages.map((message) => {
-                                    console.log(message.message)
                                     return (
                     
                                             <div>
-                                                <div className={`${styles.message} ${message.fromSelf ? `${styles.sended}`: `${styles.recieved}`}`}>
+                                                <div className={
+                                                        `${styles.message} ${message.fromSelf ? `${styles.sended}` : `${styles.recieved}`}`
+                                                    }
+                                                >
                                                     <div className={styles.content}>
                                                         <p>
                                                             {message.message}
@@ -77,7 +79,6 @@ const ChatContainer = ({currentChat,  currentUser}) => {
                                                     </div>
                                                 </div>
                                             </div>
-  
                                     )
                                 })
                             }
