@@ -38,9 +38,13 @@ const server = app.listen(PORT, () => {
 //socket connection
 const io = socket(server, {
     cors: {
-        origin: `http://localhost:${PORT}`, //if you have a custom origin you can add it here
+        origin: 'http://localhost:3030', //if you have a custom origin you can add it here
         credentials: true,
-    }
+        methods: ["GET", "POST"],
+        transports: ['websocket', 'polling'],
+    },
+    allowEIO3: true
+
 })
 
 global.onlineUsers = new Map() //All Online users will be stored in this map

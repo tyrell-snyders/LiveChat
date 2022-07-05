@@ -46,7 +46,7 @@ const ChatContainer = ({currentChat,  currentUser, socket}) => {
             message: msg
         })
         const msgs = [...messages]
-        msg.push({fromSelf: true, message: msg})
+        msgs.push({fromSelf: true, message: msg})
         setMessages(msgs)
     }
 
@@ -58,7 +58,7 @@ const ChatContainer = ({currentChat,  currentUser, socket}) => {
             })
         }
     },[])
-
+    
     useEffect(() => {
         arrivalMsg && setMessages((prev) => [...prev, arrivalMsg])
     }, [arrivalMsg])
@@ -105,7 +105,7 @@ const ChatContainer = ({currentChat,  currentUser, socket}) => {
                                 messages.map((message) => {
                                     return (
                     
-                                            <div>
+                                            <div ref={scrollRef}  key={uuidv4()}>
                                                 <div className={
                                                     `${styles.message} ${message.fromSelf ? 'justify-end': `${styles.recieved}`}`
                                                 }
