@@ -1,15 +1,15 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import { useMediaQuery} from 'react-responsive'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
-import { allUserRoute } from '../utils/APIRoutes'
+import { allUserRoute, host } from '../utils/APIRoutes'
 import Contacts from '../components/Contacts'
 import Welcome from '../components/Welcome'
 import ChatContainer from '../components/ChatContainer'
+import {io} from 'socket.io-client'
 
 const Chat = () => {
 	//styles
-	
 	const styles= {
 		screen: `h-screen w-screen flex flex-col 
 					justify-center items-center bg-primary`,
@@ -17,6 +17,8 @@ const Chat = () => {
 		Cont: `row-span-2`,
 		chat: `row-span-1`
 	}
+
+	const socket = useRef()
 
 	const navigate = useNavigate()	
 
@@ -42,6 +44,12 @@ const Chat = () => {
 		isUserLogged()
 	}, [])
 
+	useEffect(() => {
+		if(currentUser) {
+			socket.current = io(host) //if user is logged in establish connection
+			socket.current.emit('add-user', currentUser._id) //pass the current user id whenever the user is logged in to the global map
+		}
+	}, [currentUser])
 
 	useEffect(() => {
 		const getContacts = async () => {
@@ -51,7 +59,7 @@ const Chat = () => {
 					setContacts(data.data)
 					setUser(currentUser)
 					setIsLoaded(true)
-					alert('Full mobile support will be available soon. :/')
+					// alert('Full mobile support will be available soon. :/')
 				} else {
 					navigate('/setAvatar')
 				}
@@ -80,7 +88,7 @@ const Chat = () => {
 								{
 									isLoaded && currentChat === undefined ? 
 									(<Welcome currentUser={user} />):
-									(<ChatContainer currentChat={currentChat} currentUser={currentUser} />)
+									(<ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket} />)
 								}
 							</div>
 						</div>
@@ -98,7 +106,7 @@ const Chat = () => {
 								{
 									isLoaded && currentChat === undefined ? 
 									(<Welcome currentUser={user} />):
-									(<ChatContainer currentChat={currentChat} currentUser={currentUser} />)
+									(<ChatContainer currentChat={currentChat} currentUser={currentUser} socket={socket} />)
 								}
 							</div>
 						</div>

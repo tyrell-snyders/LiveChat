@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import ChatInput from './ChatInput'
 import Messages from './Messages'
 import axios from 'axios'
 import { getMsgRoute, sendMsgRoute } from '../utils/APIRoutes'
 import { useMediaQuery} from 'react-responsive'
+import {v4 as uuidv4} from 'uuid'
 
-const ChatContainer = ({currentChat,  currentUser}) => {
+const ChatContainer = ({currentChat,  currentUser, socket}) => {
     //styles
     const styles = {
         container: `h-full grid overflow-hidden`,
@@ -26,6 +27,10 @@ const ChatContainer = ({currentChat,  currentUser}) => {
 
     //useStates
     const [messages, setMessages] = useState([])
+    const [arrivalMsg, setArrivalMsg] = useState(null)
+
+    //refs
+    const scrollRef = useRef()
     
     
     //functions
@@ -35,18 +40,44 @@ const ChatContainer = ({currentChat,  currentUser}) => {
             to: currentChat._id,
             message: msg
         })
+        socket.current.emit('send-msg', {
+            to: currentChat._id,
+            from: currentUser._id,
+            message: msg
+        })
+        const msgs = [...messages]
+        msg.push({fromSelf: true, message: msg})
+        setMessages(msgs)
     }
 
     //useEffects
     useEffect(() => {
-        const getFromSelf = async () => {
-            const res = await axios.post(getMsgRoute, {
-                from: currentUser._id,
-                to: currentChat._id
+        if(socket.current) {
+            socket.current.on('msg-recieved', (msg) => {
+                setArrivalMsg({fromSelf: false, message: msg})
             })
-            setMessages(res.data)
         }
-        getFromSelf()
+    },[])
+
+    useEffect(() => {
+        arrivalMsg && setMessages((prev) => [...prev, arrivalMsg])
+    }, [arrivalMsg])
+
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: 'smooth' }) //
+    }, [messages])
+
+    useEffect(() => {
+        if (currentChat) {
+            const getFromSelf = async () => {
+                const res = await axios.post(getMsgRoute, {
+                    from: currentUser._id,
+                    to: currentChat._id
+                })
+                setMessages(res.data)
+            }
+            getFromSelf()
+        }
     }, [currentChat])
 
     //jsx
@@ -76,7 +107,7 @@ const ChatContainer = ({currentChat,  currentUser}) => {
                     
                                             <div>
                                                 <div className={
-                                                    `${styles.message} ${message.fromSelf ? `${styles.sended}` : `${styles.recieved}`}`
+                                                    `${styles.message} ${message.fromSelf ? 'justify-end': `${styles.recieved}`}`
                                                 }
                                                 >
                                                     <div 
