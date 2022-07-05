@@ -38,13 +38,12 @@ const server = app.listen(PORT, () => {
 //socket connection
 const io = socket(server, {
     cors: {
-        origin: 'http://localhost:3030', //if you have a custom origin you can add it here
+        origin: 'http://localhost:3030' || '*', //if you have a custom origin you can add it here
         credentials: true,
         methods: ["GET", "POST"],
         transports: ['websocket', 'polling'],
     },
     allowEIO3: true
-
 })
 
 global.onlineUsers = new Map() //All Online users will be stored in this map
@@ -55,10 +54,10 @@ io.on('connection', (socket) => {
         onlineUsers.set(userID, socket.id) //When a user is logged in it will establish a socket connection
     })
 
-    socket.on('send-message', (data) => {
+    socket.on('send-msg', (data) => {
         const sendUserSocket = onlineUsers.get(data.to)
         if (sendUserSocket) { //if user is online
-            socket.to(sendUserSocket).emit('msg-recieved', data.msg) //the sent message will be emitted to the online user. If said user is offline it'll be stored in the database.
+            socket.to(sendUserSocket).emit('msg-recieved', data.message) //the sent message will be emitted to the online user. If said user is offline it'll be stored in the database.
         }
     })
 })

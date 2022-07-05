@@ -32,7 +32,6 @@ const ChatContainer = ({currentChat,  currentUser, socket}) => {
     //refs
     const scrollRef = useRef()
     
-    
     //functions
     const handleSendMsg = async (msg) => {
         await axios.post(sendMsgRoute, {
@@ -54,10 +53,11 @@ const ChatContainer = ({currentChat,  currentUser, socket}) => {
     useEffect(() => {
         if(socket.current) {
             socket.current.on('msg-recieved', (msg) => {
+                
                 setArrivalMsg({fromSelf: false, message: msg})
             })
         }
-    },[])
+    }, [])
     
     useEffect(() => {
         arrivalMsg && setMessages((prev) => [...prev, arrivalMsg])
