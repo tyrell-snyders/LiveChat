@@ -46,6 +46,8 @@ SocektIO - To make life more easier for the user, there will be no need to refre
     tailwindcss
     tailwind-scrollbar
     autopefixer
+    uuid
+    socket.io-client
 
 ## NB!
   Mobile support will be implemented soon
