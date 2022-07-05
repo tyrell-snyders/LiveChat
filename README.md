@@ -6,7 +6,7 @@ Live Chat app that uses MERN and SocketIO including tailwindCSS
     R - ReactJs
     N -NodeJs
 
-SocektIO - To make life more easier for the user, there will be no need to refresh the page after sending the message to see the message. Coming Soon...
+SocektIO - To make life more easier for the user, there will be no need to refresh the page after sending the message to see the message.
 
 ## Installing dependencies
 ### React live-chat
@@ -48,6 +48,7 @@ SocektIO - To make life more easier for the user, there will be no need to refre
     autopefixer
     uuid
     socket.io-client
+    uuid
 
 ## NB!
   Mobile support will be implemented soon
